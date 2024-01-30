@@ -1,42 +1,115 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let heads = 0;
-    let tails = 0;
+    let player = 0;
+    let bot = 0;
     const Coin = document.querySelector('.coinSpace');
     const flipBtn = document.querySelector('#flipBtn');
-    const resetBtn = document.querySelector('#resetBtn');
-    const headScore = document.querySelector('.headScore');
-    const tailsScore = document.querySelector('.tailsScore');
+    const playerScore = document.querySelector('.playerScore');
+    const botScore = document.querySelector('.botScore');
+
+    const headBtn = document.querySelector('#heads');
+    const tailBtn = document.querySelector('#tails');
+
+    let selected;
+    let btnChooseBool;
+
+    headBtn.addEventListener('click', () => {
+        if (btnChooseBool) {
+            tailBtn.disabled = false;
+            flipBtn.disabled = true;
+            selected = 0;
+            btnChooseBool = 0;
+        } else {
+            tailBtn.disabled = true;
+            flipBtn.disabled = false;
+            btnChooseBool = 1;
+            selected = 1;
+        }
+    });
+
+    tailBtn.addEventListener('click', () => {
+        if (btnChooseBool) {
+            headBtn.disabled = false;
+            flipBtn.disabled = true;
+            selected = 1;
+            btnChooseBool = 0;
+        } else {
+            headBtn.disabled = true;
+            flipBtn.disabled = false;
+            btnChooseBool = 1;
+            selected = 0;
+        }
+    });
 
     flipBtn.addEventListener('click', () => {
         let i = Math.floor(Math.random() * 2);
         Coin.style.animation = 'none';
         flipBtn.disabled = true;
+        tailBtn.disabled = true;
+        headBtn.disabled = true;
         if (i) {
             Coin.style.animation = 'flipCoinHead 3s ease forwards';
-            heads++;
+            if (selected) {
+                player++;
+            } else {
+                bot++;
+            }
         } else {
             Coin.style.animation = 'flipCoinTails 3s ease forwards';
-            tails++;
+            if (!selected) {
+                player++;
+            } else {
+                bot++;
+            }
         }
-        setTimeout(setScore, 3000);
+        setTimeout(setScore, 2600);
     });
 
     function setScore() {
-        headScore.innerHTML = `Heads: ${heads}`;
-        tailsScore.innerHTML = `Tails: ${tails}`;
-        flipBtn.disabled = false;
-        resetBtn.disabled = false;
+        playerScore.innerHTML = `Player: ${player}`;
+        botScore.innerHTML = `Bot: ${bot}`;
+        flipBtn.disabled = true;
+        tailBtn.disabled = false;
+        headBtn.disabled = false;
+        btnChooseBool = 0;
+        selected = 0;
+        checkWinner();
     }
 
-    resetBtn.addEventListener('click', () => {
-        heads = 0;
-        tails = 0;
-        flipBtn.disabled = false;
-        resetBtn.disabled = true;
+    function checkWinner() {
+        if (player === 3) {
+            setTimeout(() => resetScoresPlayer(), 800);
+        }
+
+        if (bot === 3) {
+            setTimeout(() => resetScoresBot(), 800);
+        }
+    }
+
+    function resetScoresPlayer() {
+        player = 0;
+        bot = 0;
+        selected = 0;
+        flipBtn.disabled = true;
+        tailBtn.disabled = false;
+        headBtn.disabled = false;
         Coin.style.animation = 'none';
-        headScore.innerHTML = `Heads: ${heads}`;
-        tailsScore.innerHTML = `Tails: ${tails}`;
-    });
-    resetBtn.disabled = true;
+        playerScore.innerHTML = `Player: ${player}`;
+        botScore.innerHTML = `Bot: ${bot}`;
+        alert('Winner: Human');
+    }
+
+    function resetScoresBot() {
+        player = 0;
+        bot = 0;
+        selected = 0;
+        flipBtn.disabled = true;
+        tailBtn.disabled = false;
+        headBtn.disabled = false;
+        Coin.style.animation = 'none';
+        playerScore.innerHTML = `Player: ${player}`;
+        botScore.innerHTML = `Bot: ${bot}`;
+        alert('Winner: Robot bippp buuuu bip bu');
+    }
+
     //end
 });

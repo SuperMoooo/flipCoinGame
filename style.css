@@ -10,10 +10,35 @@
 body {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     height: 100vh;
-    background-color: #373737;
+    background-image: linear-gradient(
+        to bottom,
+        #1e2229,
+        #25272d,
+        #2c2d31,
+        #333335,
+        #393939
+    );
     overflow-x: hidden;
+    flex-direction: column;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.goBackLink {
+    text-decoration: none;
+    margin: 20px;
+    font-size: 20px;
+}
+
+.goBackLink:hover {
+    text-decoration: underline;
 }
 
 .container {
@@ -25,6 +50,7 @@ body {
     height: 500px;
     flex-direction: column;
     backdrop-filter: blur(12px);
+    margin-top: -50px;
 }
 
 .score,
@@ -85,7 +111,8 @@ body {
     }
 }
 
-.btnSpace > * {
+.btnSpace > *,
+.chooseBtn {
     background: none;
     outline: none;
     padding: 10px;
@@ -100,36 +127,28 @@ body {
     font-size: 14px;
 }
 
-.btnSpace > *:active {
+.btnSpace > *:active,
+.chooseBtn:active {
     box-shadow: none;
 }
 
-.btnSpace > *:hover {
+.btnSpace > *:hover,
+.chooseBtn:hover {
     font-size: 16px;
 }
 
-#flipBtn:disabled {
+#flipBtn:disabled,
+.chooseBtn:disabled {
     opacity: 0.3;
     cursor: auto;
 }
 
-#flipBtn:disabled:active {
+#flipBtn:disabled:active,
+.chooseBtn:disabled:active {
     box-shadow: 1px 3px #373737;
 }
 
-#flipBtn:disabled:hover {
-    font-size: 14px;
-}
-
-#resetBtn:disabled {
-    opacity: 0.3;
-    cursor: auto;
-}
-
-#resetBtn:disabled:active {
-    box-shadow: 1px 3px #373737;
-}
-
-#resetBtn:disabled:hover {
+#flipBtn:disabled:hover,
+.chooseBtn:disabled:hover {
     font-size: 14px;
 }
